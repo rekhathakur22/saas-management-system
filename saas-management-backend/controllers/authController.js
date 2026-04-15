@@ -57,4 +57,13 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+// get user profile
+const getProfile = (req, res) => {
+  console.log(req);
+  res.status(200).json({
+    message: "User profile",
+    user: req.user,
+  });
+};
+
+module.exports = { registerUser, loginUser, getProfile };
