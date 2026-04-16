@@ -1,4 +1,4 @@
-const user = require("../models/User");
+const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -13,23 +13,24 @@ const generateToken = (id) => {
 
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     // check if user already exists
-    const userExists = await user.findOne({ email }).select("_id");
+    const userExists = await User.findOne({ email }).select("_id");
     if (userExists) {
       return res.status(400).json({ message: "user already exists" });
     }
     // hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    const User = await user.create({
+    const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
+      role,
     });
     res
       .status(201)
-      .json({ message: "User registered successfully", name: User.name });
+      .json({ message: "User registered successfully", name: newUser.name });
   } catch (error) {
     res
       .status(500)
@@ -41,11 +42,11 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const User = await user.findOne({ email });
-    if (User && (await bcrypt.compare(password, User.password))) {
+    const newUser = await User.findOne({ email });
+    if (newUser && (await bcrypt.compare(password, newUser.password))) {
       res.status(200).json({
         message: "User logged in successfully",
-        token: generateToken(User._id),
+        token: generateToken(newUser._id),
       });
     } else {
       res.status(400).json({ message: "Invalid email or password" });
