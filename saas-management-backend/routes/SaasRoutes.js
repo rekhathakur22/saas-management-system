@@ -6,6 +6,8 @@ const {
   getTotalCost,
   getCostBreakdown,
   getUserSaasUsage,
+  getUnusedSaas,
+  getRenewalReminders,
 } = require("../controllers/saasController");
 
 // 🔥 Only admin can create SaaS
@@ -13,5 +15,9 @@ saasRouter.post("/create", protect, admin, createSaas);
 saasRouter.get("/total-cost", protect, admin, getTotalCost);
 saasRouter.get("/cost-breakdown", protect, admin, getCostBreakdown);
 saasRouter.get("/user-usage", protect, admin, getUserSaasUsage);
+saasRouter.get("/unused-saas", protect, admin, getUnusedSaas);
+saasRouter.get("/renewal-reminders", protect, admin, getRenewalReminders);
+
+// 🔥 Only admin can access these routes
 
 module.exports = saasRouter;

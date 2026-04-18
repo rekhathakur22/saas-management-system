@@ -94,9 +94,62 @@ const getUserSaasUsage = async (req, res) => {
   }
 };
 
+const getUnusedSaas = async (req, res) => {
+  try {
+    // get all users
+    const users = await userModel.find();
+
+    // get all assigned saas
+    let assignedSaasList = [];
+    users.forEach((user) => {
+      assignedSaasList = [...assignedSaasList, ...user.assignedSaas];
+    });
+
+    // get all unused saas
+    const unusedSaas = await saasModel.find({
+      _id: { $nin: assignedSaasList },
+    });
+
+    return res.status(200).json({
+      unusedSaas,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error calculating unused SaaS",
+      error: error.message,
+    });
+  }
+};
+
+const getRenewalReminders = async (req, res) => {
+  try {
+    const today = new Date();
+    const nextWeek = new Date();
+    nextWeek.setDate(today.getDate() + 7);
+
+    const saasList = await saasModel.find({
+      renewalDate: {
+        $gte: today,
+        $lte: nextWeek,
+      },
+    });
+
+    return res.status(200).json({
+      saasList,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error calculating renewal reminders",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createSaas,
   getTotalCost,
   getCostBreakdown,
   getUserSaasUsage,
+  getUnusedSaas,
+  getRenewalReminders,
 };
