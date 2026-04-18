@@ -20,6 +20,12 @@ const userSchema = new mongoose.Schema(
       enum: ["admin", "employee"],
       default: "employee",
     },
+    assignedSaas: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Saas",
+      },
+    ],
   },
   { timestamps: true },
 );
