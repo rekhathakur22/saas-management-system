@@ -64,7 +64,6 @@ const loginUser = async (req, res) => {
 
 // get user profile
 const getProfile = (req, res) => {
-  console.log(req);
   res.status(200).json({
     message: "User profile",
     user: req.user,

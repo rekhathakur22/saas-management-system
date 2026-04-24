@@ -11,6 +11,6 @@ authRouter.post("/register", registerUser);
 authRouter.post("/login", loginUser);
 
 // protected root
-authRouter.get("/profile", protect, getProfile);
+authRouter.get("/me", protect, getProfile);
 
 module.exports = authRouter;
