@@ -44,9 +44,13 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
     const newUser = await User.findOne({ email });
     if (newUser && (await bcrypt.compare(password, newUser.password))) {
+      res.cookie("token", generateToken(newUser._id), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+      });
       res.status(200).json({
         message: "User logged in successfully",
-        token: generateToken(newUser._id),
       });
     } else {
       res.status(400).json({ message: "Invalid email or password" });
