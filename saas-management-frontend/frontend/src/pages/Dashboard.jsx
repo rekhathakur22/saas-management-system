@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import AdminDashboard from "./AdminDashboard";
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -10,7 +13,6 @@ function Dashboard() {
           withCredentials: true,
         });
         setUser(data.user.role);
-        console.log(data.user.role);
       } catch (err) {
         console.log(err);
       }
@@ -24,7 +26,7 @@ function Dashboard() {
       <h1>Dashboard</h1>
 
       {/* role based access */}
-      {user === "admin" && <h3>hello admin ...</h3>}
+      {user === "admin" && navigate("/admin/dashboard")}
       {user === "employee" && <h3>hello employee ...</h3>}
     </div>
   );

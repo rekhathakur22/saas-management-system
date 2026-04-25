@@ -145,6 +145,11 @@ const getRenewalReminders = async (req, res) => {
   }
 };
 
+const getAllSaas = async (req, res) => {
+  const allSaas = await saasModel.find();
+  res.json(allSaas);
+};
+
 module.exports = {
   createSaas,
   getTotalCost,
@@ -152,4 +157,5 @@ module.exports = {
   getUserSaasUsage,
   getUnusedSaas,
   getRenewalReminders,
+  getAllSaas,
 };

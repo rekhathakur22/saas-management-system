@@ -20,8 +20,10 @@ function Login() {
           withCredentials: true,
         },
       );
-      console.log(data);
-      navigate("/dashboard");
+      // redirect based on role
+      const role = data.role;
+      if (role === "admin") navigate("/admin/dashboard");
+      else navigate("/dashboard");
     } catch (err) {
       console.log(err);
     }

@@ -51,6 +51,7 @@ const loginUser = async (req, res) => {
       });
       res.status(200).json({
         message: "User logged in successfully",
+        role: newUser.role,
       });
     } else {
       res.status(400).json({ message: "Invalid email or password" });
