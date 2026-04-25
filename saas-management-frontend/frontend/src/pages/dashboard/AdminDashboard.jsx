@@ -7,6 +7,7 @@ function AdminDashboard() {
     <div>
       <h1>Admin</h1>
       <button onClick={() => navigate("/admin/saas-list")}>All-Saas</button>
+      <button onClick={() => navigate("/admin/add-saas")}>Add-Saas</button>
     </div>
   );
 }
