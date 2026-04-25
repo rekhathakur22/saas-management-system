@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../../context/auth/UseAuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { user, loading, refetchUser } = useAuthContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (!loading && user) {
+      navigate(user.role === "admin" ? "/admin" : "/employee");
+    }
+  }, [user, loading, navigate]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "http://localhost:4000/api/auth/login",
         {
           email,
@@ -20,10 +28,8 @@ function Login() {
           withCredentials: true,
         },
       );
-      // redirect based on role
-      const role = data.role;
-      if (role === "admin") navigate("/admin/dashboard");
-      else navigate("/dashboard");
+
+      await refetchUser();
     } catch (err) {
       console.log(err);
     }
