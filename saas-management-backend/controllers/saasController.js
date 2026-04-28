@@ -54,18 +54,28 @@ const getCostBreakdown = async (req, res) => {
     const saasList = await saasModel.find();
     let monthly = 0;
     let annual = 0;
+    let totalYearlyCost = 0;
+    let monthlyToolCount = 0;
+    let yearlyToolCount = 0;
 
     saasList.forEach((item) => {
       if (item.billingCycle === "monthly") {
         monthly += item.cost;
+        totalYearlyCost += monthly * 12;
+        monthlyToolCount++;
       } else {
         annual += item.cost;
+        totalYearlyCost += annual;
+        yearlyToolCount++;
       }
     });
 
     return res.status(200).json({
       monthlyCost: monthly,
       annualCost: annual,
+      totalYearlyCost,
+      monthlyToolCount,
+      yearlyToolCount,
     });
   } catch (err) {
     res.status(500).json({

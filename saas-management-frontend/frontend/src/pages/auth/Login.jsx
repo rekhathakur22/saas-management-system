@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../context/auth/UseAuthContext";
+import styles from "./Login.module.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,19 +36,26 @@ function Login() {
     }
   };
   return (
-    <form onSubmit={submitHandler}>
-      <h2>Login</h2>
+    <form onSubmit={submitHandler} className={styles.form}>
+      <h2 className={styles.heading}>Login</h2>
+
       <input
         type="text"
         placeholder="Enter your email"
+        className={styles.input}
         onChange={(e) => setEmail(e.target.value)}
       />
+
       <input
-        type="text"
-        placeholder="password"
+        type="password"
+        placeholder="Password"
+        className={styles.input}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button type="submit">Login</button>
+
+      <button type="submit" className={styles.button}>
+        Login
+      </button>
     </form>
   );
 }
