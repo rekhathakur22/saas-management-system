@@ -161,11 +161,3 @@ Authorization: Bearer YOUR_TOKEN
 * Pagination & filtering
 * Frontend dashboard (React)
 * SaaS usage tracking analytics
-
----
-
-# 💡 Author
-
-Developed as part of a SaaS Management System project to demonstrate real-world backend architecture and scalable API design.
-
----
