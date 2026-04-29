@@ -8,7 +8,6 @@ const AdminDashboardLayout = () => {
       <AdminSidebar />
 
       <div className={styles.main}>
-        <h1 className={styles.heading}>Admin Dashboard</h1>
         <Outlet />
       </div>
     </div>

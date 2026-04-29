@@ -1,0 +1,17 @@
+.container {
+  padding: 24px;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+/* KPI Grid Layout */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* Optional: section spacing */
+.section {
+  margin-bottom: 30px;
+}
